@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Choity</title>
+
+<style>
+
+body{
+margin:0;
+font-family: 'Segoe UI',sans-serif;
+background:linear-gradient(135deg,#ff6fa5,#6a5cff);
+color:white;
+text-align:center;
+overflow-x:hidden;
+}
+
+.hero{
+height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+}
+
+.hero h1{
+font-size:55px;
+}
+
+.hero p{
+font-size:20px;
+max-width:700px;
+}
+
+.gallery{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:15px;
+padding:40px;
+}
+
+.gallery img{
+width:100%;
+border-radius:15px;
+transition:.4s;
+}
+
+.gallery img:hover{
+transform:scale(1.05);
+}
+
+.poem{
+padding:40px;
+font-size:22px;
+line-height:1.7;
+}
+
+.messageBox{
+padding:40px;
+}
+
+textarea{
+width:300px;
+height:120px;
+border-radius:10px;
+border:none;
+padding:10px;
+}
+
+button{
+padding:10px 25px;
+border:none;
+border-radius:10px;
+background:#ff4fa3;
+color:white;
+font-size:18px;
+cursor:pointer;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="hero">
+<h1>🎂 Happy Birthday Choity</h1>
+<p>
+তুমি হয়তো আমাকে চেনো না…  
+কিন্তু অনেকদিন ধরে তোমার শিল্প, গান আর হাসি আমাকে অনুপ্রাণিত করেছে।
+আজ শুধু একটা ছোট্ট শুভেচ্ছা জানাতে চাই।
+</p>
+</div>
+
+<div class="poem">
+
+<h2>রূপকথার কবির শুভেচ্ছা</h2>
+
+<p>
+
+যদি আকাশে লিখতে পারতাম নাম,  
+তবে নীলের বুক জুড়ে লিখতাম — Choity।
+
+যদি বাতাসে পাঠানো যেত অনুভূতি,  
+তবে প্রতিটা হাওয়ায় থাকত তোমার জন্য শুভকামনা।
+
+তোমার শিল্প, তোমার কণ্ঠ,  
+তোমার স্বপ্ন যেন আরও অনেক দূর উড়ে যায়।
+
+শুভ জন্মদিন।
+
+– রূপকথার কবি  
+@realshibsankarsarkar
+
+</p>
+
+</div>
+
+<div class="gallery">
+
+<img src="https://raw.githubusercontent.com/RealShibSankarSarkar/choity/refs/heads/main/crush.png">
+<img src="https://raw.githubusercontent.com/RealShibSankarSarkar/choity/6558fd465fc99719cf009d7adde229f6920f9cee/choitii%20(1).jpg">
+<img src="https://github.com/RealShibSankarSarkar/choity/blob/main/choiti2.png?raw=true">
+<img src="https://raw.githubusercontent.com/RealShibSankarSarkar/choity/refs/heads/main/choiti2.4.png">
+<img src="https://raw.githubusercontent.com/RealShibSankarSarkar/choity/refs/heads/main/Screenshot_20260206-152216.png">
+<img src="https://raw.githubusercontent.com/RealShibSankarSarkar/choity/refs/heads/main/Screenshot%202026-03-13%20205150.png">
+<img src="https://raw.githubusercontent.com/RealShibSankarSarkar/choity/refs/heads/main/Screenshot%202026-03-13%20205124.png">
+<img src="https://raw.githubusercontent.com/RealShibSankarSarkar/choity/refs/heads/main/Screenshot%202026-03-13%20205101.png">
+<img src="https://github.com/RealShibSankarSarkar/choity/blob/main/Screenshot%202026-03-13%20205044.png?raw=true">
+<img src="https://github.com/RealShibSankarSarkar/choity/blob/main/Screenshot%202026-03-13%20205020.png?raw=true">
+<img src="https://github.com/RealShibSankarSarkar/choity/blob/main/Screenshot%202026-03-13%20204741.png?raw=true">
+<img src="https://github.com/RealShibSankarSarkar/choity/blob/main/Screenshot%202026-03-13%20204727.png?raw=true">
+<img src="https://github.com/RealShibSankarSarkar/choity/blob/main/Screenshot%202026-03-13%20204655.png?raw=true">
+<img src="https://github.com/RealShibSankarSarkar/choity/blob/main/Screenshot%202026-03-13%20204633.png?raw=true">
+<img src="https://github.com/RealShibSankarSarkar/choity/blob/main/20260225_223705-COLLAGE.jpg?raw=true">
+<img src="https://github.com/RealShibSankarSarkar/choity/blob/main/20260224_232000-COLLAGE.jpg?raw=true">
+<img src="https://github.com/RealShibSankarSarkar/choity/blob/main/20260223_192428-COLLAGE.jpg?raw=true">
+<img src="https://github.com/RealShibSankarSarkar/choity/blob/main/1000001092.jpg?raw=true">
+<img src="https://github.com/RealShibSankarSarkar/choity/blob/main/1000001020.jpg?raw=true">
+
+</div>
+
+<div class="messageBox">
+
+<h2>If you want to say something...</h2>
+
+<textarea id="msg"></textarea>
+<br><br>
+
+<button onclick="sendMsg()">Send</button>
+
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, addDoc, collection } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+apiKey: "AIzaSyDhvvHziBci2CO5GEFqcfKS5-_NJ-j2Pps",
+authDomain: "choyti-96286.firebaseapp.com",
+projectId: "choyti-96286",
+storageBucket: "choyti-96286.firebasestorage.app",
+messagingSenderId: "510996550603",
+appId: "1:510996550603:web:89592e8648f42fec3c5c4e"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+window.sendMsg = async function(){
+
+let text = document.getElementById("msg").value;
+
+await addDoc(collection(db,"messages"),{
+msg:text,
+time:Date.now()
+});
+
+alert("Message sent 💌");
+
+}
+
+</script>
+
+</body>
+</html>
