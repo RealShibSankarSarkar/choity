@@ -1,187 +1,850 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Happy Birthday Choity</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>চৈতি অ্যালবাম 📖</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tiro+Bangla:ital@0;1&family=Great+Vibes&family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-<style>
+        body {
+            background: linear-gradient(145deg, #2a1a2a 0%, #1a0f1a 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Hind Siliguri', 'Tiro Bangla', sans-serif;
+            padding: 20px;
+            perspective: 4000px;
+        }
 
-body{
-margin:0;
-font-family: 'Segoe UI',sans-serif;
-background:linear-gradient(135deg,#ff6fa5,#6a5cff);
-color:white;
-text-align:center;
-overflow-x:hidden;
-}
+        /* Main container */
+        .book-container {
+            width: 100%;
+            max-width: 1400px;
+            position: relative;
+            cursor: grab;
+        }
 
-.hero{
-height:100vh;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-}
+        .book-container:active {
+            cursor: grabbing;
+        }
 
-.hero h1{
-font-size:55px;
-}
+        /* The book */
+        .book {
+            position: relative;
+            width: 100%;
+            height: 850px;
+            transform-style: preserve-3d;
+            transform: rotateX(8deg) rotateY(-18deg) translateZ(0px);
+            transition: transform 0.1s ease;
+            box-shadow: -50px 30px 60px rgba(0,0,0,0.7);
+        }
 
-.hero p{
-font-size:20px;
-max-width:700px;
-}
+        /* Book cover (spine) */
+        .book-spine {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            width: 70px;
+            height: 100%;
+            background: linear-gradient(145deg, #4a2a3a 0%, #2a1525 50%, #3a1f2f 100%);
+            transform: translateX(-50%) rotateY(90deg) translateZ(25px);
+            border-radius: 8px 0 0 8px;
+            box-shadow: 
+                inset -5px 0 15px #1a0e1a,
+                inset 5px 0 15px #8b6b8b,
+                30px 15px 40px black;
+            border-left: 3px solid #b88a5e;
+            border-right: 3px solid #624a38;
+        }
 
-.gallery{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:15px;
-padding:40px;
-}
+        /* Book title on spine */
+        .book-spine::before {
+            content: "চৈতি অ্যালবাম";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-90deg);
+            color: #e8c284;
+            font-family: 'Great Vibes', cursive;
+            font-size: 3.2rem;
+            white-space: nowrap;
+            text-shadow: 3px 3px 0 #2a1525, 0 0 15px #b8865e;
+            letter-spacing: 4px;
+            font-weight: bold;
+        }
 
-.gallery img{
-width:100%;
-border-radius:15px;
-transition:.4s;
-}
+        .book-spine::after {
+            content: "✦";
+            position: absolute;
+            top: 30px;
+            left: 20px;
+            color: #dbb47a;
+            font-size: 2rem;
+            transform: rotate(-90deg);
+        }
 
-.gallery img:hover{
-transform:scale(1.05);
-}
+        /* Pages container */
+        .pages {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+        }
 
-.poem{
-padding:40px;
-font-size:22px;
-line-height:1.7;
-}
+        /* Individual page */
+        .page {
+            position: absolute;
+            width: 45%;
+            height: 100%;
+            background: #faf3e8;
+            background-image: 
+                linear-gradient(45deg, #eee0cd 2px, transparent 2px),
+                linear-gradient(-45deg, #eee0cd 2px, transparent 2px);
+            background-size: 35px 35px;
+            border-radius: 4px 15px 15px 4px;
+            padding: 35px 25px;
+            box-shadow: 
+                0 25px 45px -10px black,
+                inset 0 0 30px #dbb48b30,
+                inset -5px 0 15px #b4947a;
+            border: 1px solid #cbb291;
+            overflow-y: auto;
+            backface-visibility: visible;
+            transition: box-shadow 0.3s ease;
+        }
 
-.messageBox{
-padding:40px;
-}
+        /* Left page */
+        .page.left {
+            left: 5%;
+            transform-origin: right center;
+            transform: rotateY(0deg) translateZ(12px);
+            border-right: 4px solid #b48b63;
+        }
 
-textarea{
-width:300px;
-height:120px;
-border-radius:10px;
-border:none;
-padding:10px;
-}
+        /* Right page */
+        .page.right {
+            left: 50%;
+            transform-origin: left center;
+            transform: rotateY(0deg) translateZ(12px);
+            border-left: 4px solid #b48b63;
+        }
 
-button{
-padding:10px 25px;
-border:none;
-border-radius:10px;
-background:#ff4fa3;
-color:white;
-font-size:18px;
-cursor:pointer;
-}
+        /* Page content */
+        .page-content {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            position: relative;
+        }
 
-</style>
+        /* Page header with title */
+        .page-header {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2rem;
+            color: #a5785a;
+            border-bottom: 2px dashed #d4a77a;
+            width: 100%;
+            text-align: center;
+            padding-bottom: 8px;
+            margin-bottom: 20px;
+        }
+
+        /* Photo frame */
+        .photo-album-frame {
+            width: 90%;
+            background: white;
+            padding: 12px 12px 35px 12px;
+            box-shadow: 
+                0 10px 20px rgba(0,0,0,0.2),
+                0 0 0 1px #cfb28b,
+                inset 0 0 0 1px #e5d5b5;
+            transform: rotate(var(--rot, 0.5deg));
+            margin: 15px auto;
+            border-radius: 3px;
+            transition: transform 0.3s ease;
+        }
+
+        .photo-album-frame:hover {
+            transform: rotate(0deg) scale(1.02);
+            box-shadow: 0 20px 30px rgba(0,0,0,0.3);
+        }
+
+        .photo-album-frame img {
+            width: 100%;
+            height: 270px;
+            object-fit: cover;
+            border: 1px solid #dbbc95;
+            filter: brightness(1.02) contrast(1.02);
+        }
+
+        /* Photo caption */
+        .photo-caption {
+            text-align: center;
+            font-family: 'Great Vibes', cursive;
+            color: #8b6a48;
+            font-size: 1.3rem;
+            margin-top: 8px;
+            font-style: italic;
+        }
+
+        /* Poem box */
+        .album-poem {
+            background: #f9efdf;
+            padding: 18px 15px;
+            border-radius: 20px 5px 20px 5px;
+            margin: 15px 0;
+            font-size: 1rem;
+            line-height: 1.9;
+            color: #3a2a1f;
+            text-align: center;
+            box-shadow: inset 0 0 15px #e3caae, 0 5px 10px rgba(0,0,0,0.1);
+            border-left: 4px solid #cfa668;
+            width: 100%;
+        }
+
+        .album-poem p {
+            margin: 5px 0;
+        }
+
+        /* Page number */
+        .page-num {
+            position: absolute;
+            bottom: 20px;
+            right: 25px;
+            color: #b28b64;
+            font-size: 0.9rem;
+            font-family: 'Great Vibes', cursive;
+        }
+
+        /* Cover page special */
+        .cover-page {
+            background: linear-gradient(135deg, #2e1d27, #1f1420);
+            background-image: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cover-title {
+            color: #efcd9a;
+            font-family: 'Great Vibes', cursive;
+            font-size: 4.5rem;
+            text-shadow: 3px 3px 0 #281a22, 0 0 30px #b8866e;
+            text-align: center;
+            line-height: 1.3;
+        }
+
+        .cover-sub {
+            color: #deb887;
+            font-size: 1.5rem;
+            margin-top: 20px;
+            letter-spacing: 2px;
+        }
+
+        .gold-star {
+            color: #ffd966;
+            font-size: 2rem;
+            margin: 15px;
+            animation: twinkle 2s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.7; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.1); text-shadow: 0 0 20px gold; }
+        }
+
+        /* Message page special */
+        .message-page {
+            background: #fcf3e1;
+            justify-content: center;
+        }
+
+        .message-title {
+            font-family: 'Great Vibes', cursive;
+            color: #b2815a;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .message-input {
+            width: 100%;
+            height: 140px;
+            padding: 15px;
+            background: #fffcf5;
+            border: 2px solid #dbb68c;
+            border-radius: 15px;
+            font-family: 'Hind Siliguri', sans-serif;
+            font-size: 1.1rem;
+            resize: vertical;
+            box-shadow: inset 0 4px 8px #e5d0b5;
+        }
+
+        .send-button {
+            background: linear-gradient(145deg, #b8865e, #8b5e4c);
+            border: none;
+            padding: 14px 40px;
+            color: white;
+            font-size: 1.3rem;
+            border-radius: 50px;
+            margin: 20px 0;
+            box-shadow: 0 8px 0 #543d30, 0 15px 25px black;
+            cursor: pointer;
+            transition: 0.1s ease;
+            font-weight: 600;
+        }
+
+        .send-button:active {
+            transform: translateY(6px);
+            box-shadow: 0 2px 0 #543d30, 0 8px 15px black;
+        }
+
+        .send-button:hover {
+            background: linear-gradient(145deg, #c79870, #9b6e58);
+        }
+
+        /* Navigation dots */
+        .nav-dots {
+            position: fixed;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 18px;
+            background: rgba(255, 240, 220, 0.7);
+            backdrop-filter: blur(8px);
+            padding: 15px 25px;
+            border-radius: 60px;
+            border: 1px solid #b28b5c;
+            z-index: 2000;
+        }
+
+        .nav-dot {
+            width: 14px;
+            height: 14px;
+            background: #b28b64;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: 0.2s;
+            border: 2px solid transparent;
+        }
+
+        .nav-dot.active {
+            background: #e8b87a;
+            transform: scale(1.5);
+            border-color: #694d38;
+            box-shadow: 0 0 15px #f0c27b;
+        }
+
+        .nav-dot:hover {
+            background: #e8b87a;
+            transform: scale(1.3);
+        }
+    </style>
 </head>
-
 <body>
+    <div class="book-container" id="bookContainer">
+        <div class="book" id="book">
+            <!-- Book spine -->
+            <div class="book-spine"></div>
 
-<div class="hero">
-<h1>🎂 Happy Birthday Choity</h1>
-<p>
-তুমি হয়তো আমাকে চেনো না…  
-কিন্তু অনেকদিন ধরে তোমার শিল্প, গান আর হাসি আমাকে অনুপ্রাণিত করেছে।
-আজ শুধু একটা ছোট্ট শুভেচ্ছা জানাতে চাই।
-</p>
-</div>
+            <div class="pages" id="pagesContainer">
+                <!-- COVER PAGE (Left) - Page 0 -->
+                <div class="page left cover-page" style="background: #281a24; background-image: none;">
+                    <div class="page-content" style="justify-content: center;">
+                        <div class="gold-star">✦</div>
+                        <div class="cover-title">চৈতি<br>অ্যালবাম</div>
+                        <div class="cover-sub">একটি রূপকথার গল্প</div>
+                        <div style="margin-top: 60px; color: #c9a77b;">❤️ ১৭টি বসন্ত ❤️</div>
+                        <div class="gold-star" style="margin-top: 40px;">✧</div>
+                    </div>
+                </div>
 
-<div class="poem">
+                <!-- PAGE 1 (Right) - First image with poem -->
+                <div class="page right">
+                    <div class="page-content">
+                        <div class="page-header">প্রথম দেখা</div>
+                        <div class="photo-album-frame" style="--rot:0.8deg">
+                            <img src="https://raw.githubusercontent.com/RealShibSankarSarkar/choity/refs/heads/main/crush.png" alt="চৈতি">
+                            <div class="photo-caption">চোখে স্বপ্ন, মুখে হাসি</div>
+                        </div>
+                        <div class="album-poem">
+                            <p>আকাশ থেকে নামা পরি,</p>
+                            <p>চৈতি তুমি আলোর ভরি।</p>
+                            <p>প্রথম দেখায় মন যে বলে,</p>
+                            <p>এই তো খুঁজেছিলাম চোখে জ্বলে।</p>
+                        </div>
+                        <div class="page-num">★ ১ ★</div>
+                    </div>
+                </div>
 
-<h2>রূপকথার কবির শুভেচ্ছা</h2>
+                <!-- PAGE 2 (Left) - Second image -->
+                <div class="page left">
+                    <div class="page-content">
+                        <div class="page-header">নৃত্যের মুগ্ধতা</div>
+                        <div class="photo-album-frame" style="--rot:-0.7deg">
+                            <img src="https://raw.githubusercontent.com/RealShibSankarSarkar/choity/6558fd465fc99719cf009d7adde229f6920f9cee/choitii%20(1).jpg" alt="চৈতি">
+                            <div class="photo-caption">পায়ে পায়ে ছন্দময়ী</div>
+                        </div>
+                        <div class="album-poem">
+                            <p>ঘুঙুর বাজে মনের তালে,</p>
+                            <p>তুমি যে নৃত্যের আলো জ্বালে।</p>
+                            <p>দেখে তোমার ভঙ্গিমা,</p>
+                            <p>হৃদয় নাচে প্রেমের সীমা।</p>
+                        </div>
+                        <div class="page-num">★ ২ ★</div>
+                    </div>
+                </div>
 
-<p>
+                <!-- PAGE 3 (Right) - Third image -->
+                <div class="page right">
+                    <div class="page-content">
+                        <div class="page-header">রঙের খেলা</div>
+                        <div class="photo-album-frame" style="--rot:1deg">
+                            <img src="https://github.com/RealShibSankarSarkar/choity/blob/main/choiti2.png?raw=true" alt="চৈতি">
+                            <div class="photo-caption">তুলিতে মেশা রঙের মায়া</div>
+                        </div>
+                        <div class="album-poem">
+                            <p>তুলি দিয়ে আঁকা ছবি,</p>
+                            <p>তোমার মতো এমন কভি?</p>
+                            <p>রঙের মাঝে হারিয়ে যাই,</p>
+                            <p>চৈতি নামে ডুবে থাকি।</p>
+                        </div>
+                        <div class="page-num">★ ৩ ★</div>
+                    </div>
+                </div>
 
-যদি আকাশে লিখতে পারতাম নাম,  
-তবে নীলের বুক জুড়ে লিখতাম — Choity।
+                <!-- PAGE 4 (Left) - Fourth image -->
+                <div class="page left">
+                    <div class="page-content">
+                        <div class="page-header">মায়াবী চোখ</div>
+                        <div class="photo-album-frame" style="--rot:-0.5deg">
+                            <img src="https://raw.githubusercontent.com/RealShibSankarSarkar/choity/refs/heads/main/choiti2.4.png" alt="চৈতি">
+                            <div class="photo-caption">গভীর চোখের ভাষা</div>
+                        </div>
+                        <div class="album-poem">
+                            <p>চোখ তুলে তাকাও যদি,</p>
+                            <p>হারিয়ে যাই স্বপ্ননদী।</p>
+                            <p>মায়া যে তোমার আঁখিতে,</p>
+                            <p>পড়ে থাকে প্রেম চকিতে।</p>
+                        </div>
+                        <div class="page-num">★ ৪ ★</div>
+                    </div>
+                </div>
 
-যদি বাতাসে পাঠানো যেত অনুভূতি,  
-তবে প্রতিটা হাওয়ায় থাকত তোমার জন্য শুভকামনা।
+                <!-- PAGE 5 (Right) - Fifth image -->
+                <div class="page right">
+                    <div class="page-content">
+                        <div class="page-header">শিল্পীর হাসি</div>
+                        <div class="photo-album-frame" style="--rot:0.6deg">
+                            <img src="https://raw.githubusercontent.com/RealShibSankarSarkar/choity/refs/heads/main/Screenshot_20260206-152216.png" alt="চৈতি">
+                            <div class="photo-caption">আলোর ঝলক</div>
+                        </div>
+                        <div class="album-poem">
+                            <p>হাসি তোমার ফুলের মেলা,</p>
+                            <p>দেখে যে কারো চোখ জ্বলে।</p>
+                            <p>শিল্পী বলে ডাকি তোমায়,</p>
+                            <p>তুমি যে সবার মন জুড়ালে।</p>
+                        </div>
+                        <div class="page-num">★ ৫ ★</div>
+                    </div>
+                </div>
 
-তোমার শিল্প, তোমার কণ্ঠ,  
-তোমার স্বপ্ন যেন আরও অনেক দূর উড়ে যায়।
+                <!-- Continue same pattern for all 19 images...
+                     I'll show the rest of them quickly: -->
 
-শুভ জন্মদিন।
+                <!-- PAGE 6 (Left) -->
+                <div class="page left">
+                    <div class="page-content">
+                        <div class="page-header">স্বপ্নচারী</div>
+                        <div class="photo-album-frame" style="--rot:-0.9deg">
+                            <img src="https://raw.githubusercontent.com/RealShibSankarSarkar/choity/refs/heads/main/Screenshot%202026-03-13%20205150.png" alt="চৈতি">
+                            <div class="photo-caption">স্বপ্নের পরি</div>
+                        </div>
+                        <div class="album-poem">
+                            <p>স্বপ্ন দেখো, স্বপ্ন ছড়াও,</p>
+                            <p>আমার স্বপ্নে তুমি যে দিও পাও।</p>
+                            <p>দূর থেকে ডাকি তোমায়,</p>
+                            <p>শুনতে পাও কি মোর হৃদয়?</p>
+                        </div>
+                        <div class="page-num">★ ৬ ★</div>
+                    </div>
+                </div>
 
-– রূপকথার কবি  
-@realshibsankarsarkar
+                <!-- PAGE 7 (Right) -->
+                <div class="page right">
+                    <div class="page-content">
+                        <div class="page-header">রূপকথার গল্প</div>
+                        <div class="photo-album-frame" style="--rot:0.4deg">
+                            <img src="https://raw.githubusercontent.com/RealShibSankarSarkar/choity/refs/heads/main/Screenshot%202026-03-13%20205124.png" alt="চৈতি">
+                            <div class="photo-caption">গল্পের নায়িকা</div>
+                        </div>
+                        <div class="album-poem">
+                            <p>রূপকথার রাজকন্যে তুমি,</p>
+                            <p>আমি শুধু পথের স্বপ্নী।</p>
+                            <p>দেখি তোমায় দূর থেকে,</p>
+                            <p>মন যে কেমন যেন থাকে।</p>
+                        </div>
+                        <div class="page-num">★ ৭ ★</div>
+                    </div>
+                </div>
 
-</p>
+                <!-- PAGE 8 (Left) -->
+                <div class="page left">
+                    <div class="page-content">
+                        <div class="page-header">আলোর ঝলক</div>
+                        <div class="photo-album-frame" style="--rot:-0.3deg">
+                            <img src="https://raw.githubusercontent.com/RealShibSankarSarkar/choity/refs/heads/main/Screenshot%202026-03-13%20205101.png" alt="চৈতি">
+                            <div class="photo-caption">উজ্জ্বল তারা</div>
+                        </div>
+                        <div class="album-poem">
+                            <p>তুমি যে আলো জ্বালো মোরে,</p>
+                            <p>অন্ধকারেও দেখি তোরে।</p>
+                            <p>জ্বলে থাকো সবার মাঝে,</p>
+                            <p>তোমার আলোয় সব সাজে।</p>
+                        </div>
+                        <div class="page-num">★ ৮ ★</div>
+                    </div>
+                </div>
 
-</div>
+                <!-- PAGE 9 (Right) -->
+                <div class="page right">
+                    <div class="page-content">
+                        <div class="page-header">শৈল্পিক দৃষ্টি</div>
+                        <div class="photo-album-frame" style="--rot:0.7deg">
+                            <img src="https://github.com/RealShibSankarSarkar/choity/blob/main/Screenshot%202026-03-13%20205044.png?raw=true" alt="চৈতি">
+                            <div class="photo-caption">শিল্পীর চোখ</div>
+                        </div>
+                        <div class="album-poem">
+                            <p>যেদিকে চাও, ছবি আঁকো,</p>
+                            <p>সবাই যে তোমায় দেখে রাঁধো।</p>
+                            <p>চৈতি নামে ডাকলে পরে,</p>
+                            <p>হৃদয় মোর দোলে ঝড়ে।</p>
+                        </div>
+                        <div class="page-num">★ ৯ ★</div>
+                    </div>
+                </div>
 
-<div class="gallery">
+                <!-- PAGE 10 (Left) -->
+                <div class="page left">
+                    <div class="page-content">
+                        <div class="page-header">মুখর সকাল</div>
+                        <div class="photo-album-frame" style="--rot:-0.8deg">
+                            <img src="https://github.com/RealShibSankarSarkar/choity/blob/main/Screenshot%202026-03-13%20205020.png?raw=true" alt="চৈতি">
+                            <div class="photo-caption">সকাল বেলার রোদ</div>
+                        </div>
+                        <div class="album-poem">
+                            <p>সকাল বেলা ওই মুখ,</p>
+                            <p>হারিয়ে ফেলা সুখ।</p>
+                            <p>তোমায় দেখি স্বপ্নে রোজ,</p>
+                            <p>ভোর হয় না আমার খোঁজ।</p>
+                        </div>
+                        <div class="page-num">★ ১০ ★</div>
+                    </div>
+                </div>
 
-<img src="https://raw.githubusercontent.com/RealShibSankarSarkar/choity/refs/heads/main/crush.png">
-<img src="https://raw.githubusercontent.com/RealShibSankarSarkar/choity/6558fd465fc99719cf009d7adde229f6920f9cee/choitii%20(1).jpg">
-<img src="https://github.com/RealShibSankarSarkar/choity/blob/main/choiti2.png?raw=true">
-<img src="https://raw.githubusercontent.com/RealShibSankarSarkar/choity/refs/heads/main/choiti2.4.png">
-<img src="https://raw.githubusercontent.com/RealShibSankarSarkar/choity/refs/heads/main/Screenshot_20260206-152216.png">
-<img src="https://raw.githubusercontent.com/RealShibSankarSarkar/choity/refs/heads/main/Screenshot%202026-03-13%20205150.png">
-<img src="https://raw.githubusercontent.com/RealShibSankarSarkar/choity/refs/heads/main/Screenshot%202026-03-13%20205124.png">
-<img src="https://raw.githubusercontent.com/RealShibSankarSarkar/choity/refs/heads/main/Screenshot%202026-03-13%20205101.png">
-<img src="https://github.com/RealShibSankarSarkar/choity/blob/main/Screenshot%202026-03-13%20205044.png?raw=true">
-<img src="https://github.com/RealShibSankarSarkar/choity/blob/main/Screenshot%202026-03-13%20205020.png?raw=true">
-<img src="https://github.com/RealShibSankarSarkar/choity/blob/main/Screenshot%202026-03-13%20204741.png?raw=true">
-<img src="https://github.com/RealShibSankarSarkar/choity/blob/main/Screenshot%202026-03-13%20204727.png?raw=true">
-<img src="https://github.com/RealShibSankarSarkar/choity/blob/main/Screenshot%202026-03-13%20204655.png?raw=true">
-<img src="https://github.com/RealShibSankarSarkar/choity/blob/main/Screenshot%202026-03-13%20204633.png?raw=true">
-<img src="https://github.com/RealShibSankarSarkar/choity/blob/main/20260225_223705-COLLAGE.jpg?raw=true">
-<img src="https://github.com/RealShibSankarSarkar/choity/blob/main/20260224_232000-COLLAGE.jpg?raw=true">
-<img src="https://github.com/RealShibSankarSarkar/choity/blob/main/20260223_192428-COLLAGE.jpg?raw=true">
-<img src="https://github.com/RealShibSankarSarkar/choity/blob/main/1000001092.jpg?raw=true">
-<img src="https://github.com/RealShibSankarSarkar/choity/blob/main/1000001020.jpg?raw=true">
+                <!-- PAGE 11 (Right) -->
+                <div class="page right">
+                    <div class="page-content">
+                        <div class="page-header">সন্ধ্যার রং</div>
+                        <div class="photo-album-frame" style="--rot:0.5deg">
+                            <img src="https://github.com/RealShibSankarSarkar/choity/blob/main/Screenshot%202026-03-13%20204741.png?raw=true" alt="চৈতি">
+                            <div class="photo-caption">সন্ধ্যার মেয়ে</div>
+                        </div>
+                        <div class="album-poem">
+                            <p>সন্ধ্যা নামে, তুমি জাগো,</p>
+                            <p>আমার ভাবনায় আগুন লাগো।</p>
+                            <p>রঙিন সাজে এলে যখন,</p>
+                            <p>দুনিয়া ভরে রঙে তখন।</p>
+                        </div>
+                        <div class="page-num">★ ১১ ★</div>
+                    </div>
+                </div>
 
-</div>
+                <!-- PAGE 12 (Left) -->
+                <div class="page left">
+                    <div class="page-content">
+                        <div class="page-header">মেঘের ওড়না</div>
+                        <div class="photo-album-frame" style="--rot:-0.4deg">
+                            <img src="https://github.com/RealShibSankarSarkar/choity/blob/main/Screenshot%202026-03-13%20204727.png?raw=true" alt="চৈতি">
+                            <div class="photo-caption">মেঘের মতো কোমল</div>
+                        </div>
+                        <div class="album-poem">
+                            <p>মেঘের মতো নরম তুমি,</p>
+                            <p>বাতাসে ভাসো ধীরে ধূমি।</p>
+                            <p>আকাশ ছোঁয়ার ইচ্ছে জাগে,</p>
+                            <p>তোমায় পাওয়ার আশা লাগে।</p>
+                        </div>
+                        <div class="page-num">★ ১২ ★</div>
+                    </div>
+                </div>
 
-<div class="messageBox">
+                <!-- PAGE 13 (Right) -->
+                <div class="page right">
+                    <div class="page-content">
+                        <div class="page-header">চাঁদের আলো</div>
+                        <div class="photo-album-frame" style="--rot:1.1deg">
+                            <img src="https://github.com/RealShibSankarSarkar/choity/blob/main/Screenshot%202026-03-13%20204655.png?raw=true" alt="চৈতি">
+                            <div class="photo-caption">চাঁদের মতো জ্বলে</div>
+                        </div>
+                        <div class="album-poem">
+                            <p>চাঁদ মামা হাসে রাতে,</p>
+                            <p>তোমার মুখ দেখে সাথে।</p>
+                            <p>তারা সবে জ্বলে ঝলে,</p>
+                            <p>চৈতি নামে সবে চলে।</p>
+                        </div>
+                        <div class="page-num">★ ১৩ ★</div>
+                    </div>
+                </div>
 
-<h2>If you want to say something...</h2>
+                <!-- PAGE 14 (Left) -->
+                <div class="page left">
+                    <div class="page-content">
+                        <div class="page-header">বৃষ্টি ভেজা</div>
+                        <div class="photo-album-frame" style="--rot:-0.6deg">
+                            <img src="https://github.com/RealShibSankarSarkar/choity/blob/main/Screenshot%202026-03-13%20204633.png?raw=true" alt="চৈতি">
+                            <div class="photo-caption">বৃষ্টি ভেজা বিকেল</div>
+                        </div>
+                        <div class="album-poem">
+                            <p>বৃষ্টি নামে, তুমি এলে,</p>
+                            <p>মনে পড়ে কোন গল্পে।</p>
+                            <p>ভিজে ভিজে একলা পথে,</p>
+                            <p>তোমায় খুঁজি কত মতে।</p>
+                        </div>
+                        <div class="page-num">★ ১৪ ★</div>
+                    </div>
+                </div>
 
-<textarea id="msg"></textarea>
-<br><br>
+                <!-- PAGE 15 (Right) -->
+                <div class="page right">
+                    <div class="page-content">
+                        <div class="page-header">রোদেলা সকাল</div>
+                        <div class="photo-album-frame" style="--rot:0.9deg">
+                            <img src="https://github.com/RealShibSankarSarkar/choity/blob/main/20260225_223705-COLLAGE.jpg?raw=true" alt="চৈতি">
+                            <div class="photo-caption">আলো ছড়ানো</div>
+                        </div>
+                        <div class="album-poem">
+                            <p>রোদ মাখা মুখ তোর,</p>
+                            <p>আমার যত সুখ ভোর।</p>
+                            <p>দেখা নাই চোখে এখনো,</p>
+                            <p>তবু ভালবাসি কতই না।</p>
+                        </div>
+                        <div class="page-num">★ ১৫ ★</div>
+                    </div>
+                </div>
 
-<button onclick="sendMsg()">Send</button>
+                <!-- PAGE 16 (Left) -->
+                <div class="page left">
+                    <div class="page-content">
+                        <div class="page-header">গানের ভুবন</div>
+                        <div class="photo-album-frame" style="--rot:-0.5deg">
+                            <img src="https://github.com/RealShibSankarSarkar/choity/blob/main/20260224_232000-COLLAGE.jpg?raw=true" alt="চৈতি">
+                            <div class="photo-caption">গানে গানে তুমি</div>
+                        </div>
+                        <div class="album-poem">
+                            <p>গান গাও তুমি সুর ঝরিয়ে,</p>
+                            <p>মন আমার যায় যে ভাসিয়ে।</p>
+                            <p>সুরের মাঝে খুঁজে তোরে,</p>
+                            <p>ডাকি চৈতি সুর করে।</p>
+                        </div>
+                        <div class="page-num">★ ১৬ ★</div>
+                    </div>
+                </div>
 
-</div>
+                <!-- PAGE 17 (Right) -->
+                <div class="page right">
+                    <div class="page-content">
+                        <div class="page-header">মনের মানুষ</div>
+                        <div class="photo-album-frame" style="--rot:0.2deg">
+                            <img src="https://github.com/RealShibSankarSarkar/choity/blob/main/20260223_192428-COLLAGE.jpg?raw=true" alt="চৈতি">
+                            <div class="photo-caption">মনের মধ্যে তুমি</div>
+                        </div>
+                        <div class="album-poem">
+                            <p>মন বলে তুমি আমার,</p>
+                            <p>দূর থেকেই খুব আদর।</p>
+                            <p>স্বপ্নে আঁকি তোমার ছবি,</p>
+                            <p>চৈতি নামে কবিতা লিখি।</p>
+                        </div>
+                        <div class="page-num">★ ১৭ ★</div>
+                    </div>
+                </div>
 
-<script type="module">
+                <!-- PAGE 18 (Left) -->
+                <div class="page left">
+                    <div class="page-content">
+                        <div class="page-header">সোনালি বিকেল</div>
+                        <div class="photo-album-frame" style="--rot:-1deg">
+                            <img src="https://github.com/RealShibSankarSarkar/choity/blob/main/1000001092.jpg?raw=true" alt="চৈতি">
+                            <div class="photo-caption">বিকেলের রোদ</div>
+                        </div>
+                        <div class="album-poem">
+                            <p>বিকেল বেলা পড়ে রোদ,</p>
+                            <p>তোমার মুখের পড়ে মধু।</p>
+                            <p>দেখি তোমায় দূর থেকে,</p>
+                            <p>হৃদয় বলে কাছে থাক।</p>
+                        </div>
+                        <div class="page-num">★ ১৮ ★</div>
+                    </div>
+                </div>
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, addDoc, collection } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+                <!-- PAGE 19 (Right) - Last image page -->
+                <div class="page right">
+                    <div class="page-content">
+                        <div class="page-header">শেষ নয়, শুরু</div>
+                        <div class="photo-album-frame" style="--rot:0.8deg">
+                            <img src="https://github.com/RealShibSankarSarkar/choity/blob/main/1000001020.jpg?raw=true" alt="চৈতি">
+                            <div class="photo-caption">গল্প চলুক</div>
+                        </div>
+                        <div class="album-poem">
+                            <p>শেষ পাতা নয় এটা,</p>
+                            <p>শুধু গল্পের শুরুটা।</p>
+                            <p>চৈতি নামে ডাক দিলে,</p>
+                            <p>আমি আছি এই খানে।</p>
+                        </div>
+                        <div class="page-num">★ ১৯ ★</div>
+                    </div>
+                </div>
 
-const firebaseConfig = {
-apiKey: "AIzaSyDhvvHziBci2CO5GEFqcfKS5-_NJ-j2Pps",
-authDomain: "choyti-96286.firebaseapp.com",
-projectId: "choyti-96286",
-storageBucket: "choyti-96286.firebasestorage.app",
-messagingSenderId: "510996550603",
-appId: "1:510996550603:web:89592e8648f42fec3c5c4e"
-};
+                <!-- LAST PAGE (Left) - Message Page -->
+                <div class="page left message-page">
+                    <div class="page-content">
+                        <div class="message-title">একটু কথা বলো?</div>
+                        
+                        <div class="album-poem" style="background: #efdccb;">
+                            <p>এই অ্যালবাম শেষ হয় না,</p>
+                            <p>শুধু তোমার অপেক্ষায়।</p>
+                            <p>একটু যদি কথা বলো,</p>
+                            <p>আমার দিন হয় যে আলো।</p>
+                        </div>
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+                        <textarea id="messageInput" class="message-input" placeholder="তোমার মনের কিছু কথা... (শুভেচ্ছা, ভালোলাগা, বা শুধু হাই)"></textarea>
 
-window.sendMsg = async function(){
+                        <button id="sendMsgBtn" class="send-button">বার্তা পাঠাও</button>
+                        
+                        <div style="margin-top: 15px; color:#a5785a;">✨ রূপকথার বন্ধু ✨</div>
+                        <div class="page-num">শেষ নয়...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-let text = document.getElementById("msg").value;
+        <!-- Navigation dots -->
+        <div class="nav-dots" id="navDots"></div>
+    </div>
 
-await addDoc(collection(db,"messages"),{
-msg:text,
-time:Date.now()
-});
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
-alert("Message sent 💌");
+        const firebaseConfig = {
+            apiKey: "AIzaSyDhvvHziBci2CO5GEFqcfKS5-_NJ-j2Pps",
+            authDomain: "choyti-96286.firebaseapp.com",
+            projectId: "choyti-96286",
+            storageBucket: "choyti-96286.firebasestorage.app",
+            messagingSenderId: "510996550603",
+            appId: "1:510996550603:web:89592e8648f42fec3c5c4e"
+        };
 
-}
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
 
-</script>
+        // 3D book drag functionality
+        const book = document.getElementById('book');
+        let isDragging = false;
+        let startX, startY;
+        let rotX = 8, rotY = -18;
 
+        book.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            startX = e.clientX;
+            startY = e.clientY;
+            book.style.transition = 'none';
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            
+            const dx = e.clientX - startX;
+            const dy = e.clientY - startY;
+            
+            rotY += dx * 0.15;
+            rotX -= dy * 0.1;
+            
+            rotX = Math.max(0, Math.min(20, rotX));
+            
+            book.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg) translateZ(0px)`;
+            
+            startX = e.clientX;
+            startY = e.clientY;
+        });
+
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+            book.style.transition = 'transform 0.3s ease';
+        });
+
+        // Send message
+        document.getElementById('sendMsgBtn')?.addEventListener('click', async () => {
+            const msgBox = document.getElementById('messageInput');
+            const msg = msgBox.value.trim();
+            const btn = document.getElementById('sendMsgBtn');
+
+            if (!msg) {
+                alert("দয়া করে কিছু লিখুন...");
+                return;
+            }
+
+            btn.innerText = "পাঠানো হচ্ছে...";
+            btn.disabled = true;
+
+            try {
+                await addDoc(collection(db, "replies"), {
+                    message: msg,
+                    timestamp: serverTimestamp()
+                });
+                alert("✨ তোমার বার্তা চৈতি অ্যালবামে জায়গা পেল! ✨");
+                msgBox.value = "";
+            } catch (error) {
+                alert("দুঃখিত, আবার চেষ্টা করুন।");
+            } finally {
+                btn.innerText = "বার্তা পাঠাও";
+                btn.disabled = false;
+            }
+        });
+
+        // Navigation dots
+        const pages = document.querySelectorAll('.page');
+        const navDots = document.getElementById('navDots');
+        
+        pages.forEach((_, index) => {
+            const dot = document.createElement('div');
+            dot.className = 'nav-dot';
+            dot.addEventListener('click', () => {
+                rotY = -18 + (index * 14); // Adjust angle per page
+                book.style.transform = `rotateX(8deg) rotateY(${rotY}deg) translateZ(0px)`;
+            });
+            navDots.appendChild(dot);
+        });
+
+        // Update active dot based on rotation (simplified)
+        setInterval(() => {
+            const approxPage = Math.round((rotY + 18) / 14);
+            document.querySelectorAll('.nav-dot').forEach((dot, idx) => {
+                if (idx === approxPage || (approxPage < 0 && idx === 0) || (approxPage >= pages.length && idx === pages.length-1)) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        }, 100);
+    </script>
 </body>
 </html>
